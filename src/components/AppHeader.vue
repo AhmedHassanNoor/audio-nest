@@ -9,9 +9,9 @@
         <ul class="flex flex-row mt-1">
           <!-- Navigation Links -->
           <li>
-            <a class="px-2 text-white" href="#" @click.prevent="toggleAuthModal"
-              >Login / Register</a
-            >
+            <a class="px-2 text-white" href="#" @click.prevent="toggleSigInAndOut">{{
+              `${userLoggedIn ? 'Sign Out' : 'Login / Register'}`
+            }}</a>
           </li>
           <li>
             <a class="px-2 text-white" href="#">Manage</a>
@@ -22,13 +22,25 @@
   </header>
 </template>
 <script>
-import { mapActions } from 'pinia'
+import { mapActions, mapState } from 'pinia'
 import useModelStore from '@/stores/modal'
+import useUserStore from '@/stores/user'
 
 export default {
   name: 'AppHeader',
   computed: {
-    ...mapActions(useModelStore, ['toggleAuthModal'])
+    ...mapState(useUserStore, ['userLoggedIn'])
+  },
+  methods: {
+    ...mapActions(useModelStore, ['toggleAuthModal']),
+    ...mapActions(useUserStore, ['sigOut']),
+    toggleSigInAndOut() {
+      if (this.userLoggedIn) {
+        this.sigOut()
+      } else {
+        this.toggleAuthModal()
+      }
+    }
   }
 }
 </script>

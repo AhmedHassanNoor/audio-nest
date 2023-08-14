@@ -105,6 +105,8 @@
 
 <script>
 import { ErrorMessage } from 'vee-validate'
+import { mapActions } from 'pinia'
+import useUserStore from '@/stores/user'
 
 export default {
   name: 'RegisterForm',
@@ -130,15 +132,25 @@ export default {
     }
   },
   methods: {
-    register(values) {
+    ...mapActions(useUserStore, ['registerUser']),
+    async register(values) {
       this.regShowAlert = true
       this.regInSubmission = true
       this.regAlertVariant = 'bg-blue-500'
       this.regAlertMsg = 'Please wait! We are logging you in.'
 
+      try {
+        await this.registerUser(values)
+      } catch (error) {
+        this.regInSubmission = false
+        this.regAlertVariant = 'bg-red-500'
+        this.regAlertMsg = 'An unexpected error occurred. Please try again later.'
+        return
+      }
+
       this.regAlertVariant = 'bg-green-500'
       this.regAlertMsg = 'Success! You are now logged in.'
-      console.log({ values })
+      window.location.reload()
     }
   }
 }
