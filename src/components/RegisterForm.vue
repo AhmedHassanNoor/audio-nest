@@ -150,7 +150,7 @@ export default {
 
       this.regAlertVariant = 'bg-green-500'
       this.regAlertMsg = 'Success! You are now logged in.'
-      window.location.reload()
+      this.regInSubmission = false
     }
   }
 }
