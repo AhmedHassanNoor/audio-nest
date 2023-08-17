@@ -79,11 +79,6 @@ export default {
       tab: 'login'
     }
   },
-  components: { RegisterForm, LoginForm },
-  methods: {
-    register(values) {
-      console.log({ values })
-    }
-  }
+  components: { RegisterForm, LoginForm }
 }
 </script>

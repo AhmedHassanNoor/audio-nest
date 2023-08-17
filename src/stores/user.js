@@ -28,7 +28,6 @@ export default defineStore('user', {
     },
 
     async sigOut() {
-      console.log('in here')
       await auth.signOut()
       this.userLoggedIn = false
     }
